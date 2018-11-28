@@ -3,18 +3,16 @@
 This is an cabal-irc-bouncer, It let's you connect to
 the cabal p2p network using whichever irc-client you prefer.
 
-Usage:
+Usage
+  cabal-irc cabal://key
+  cabal-irc --db=/path/to/previously_created_folder
 
-
-cabal-irc [key|dbpath]
-
-Fore more help run
-
-cabal-irc --help
-
-(readme is work in progress, we don't actually have an `cabal-irc` executable
-right now.
-just clone this project and run `node cli.js` to figure out how it works)
+  Options:
+    --db      Resume a previously created session.
+    --key     Specify a cabal key.
+    --host    Host/Address to use for incoming IRC-connections.
+    --port    Port to listen for incoming IRC-connections.
+    --help    Prints this message.
 
 
 # Implemented IRC-commads

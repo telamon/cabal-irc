@@ -3,8 +3,29 @@ const net = require('net')
 const argv = require('minimist')(process.argv)
 const CabalIRC = require('.')
 
+
+var usage = `Usage
+  cabal-irc cabal://key
+  cabal-irc --db=/path/to/previously_created_folder
+
+  Options:
+    --db      Resume a previously created session.
+    --key     Specify a cabal key.
+    --host    Host/Address to use for incoming IRC-connections.
+    --port    Port to listen for incoming IRC-connections.
+    --help    Prints this message.
+`
+
 // Process arguments
-let {db, key, host, port} = argv
+let {db, key, host, port, help} = argv
+
+// Priint usage and exit
+if (help) {
+  process.stderr.write(usage)
+  process.exit(1)
+}
+
+
 
 // Load configuration from environment for docker-friendlyness
 if (!key)   key = process.env['CABAL_KEY'] || null
@@ -23,7 +44,7 @@ if (!db && key) {
   let rootdir = homedir + '/.cabal/archives/'
   db = rootdir + key
 }else if (!db && !key) {
-  process.stderr.write("Please provide --db or --key\n")
+  process.stderr.write(usage)
   process.exit(1)
 }
 // Initialize new instance of CabalIRC
