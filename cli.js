@@ -2,7 +2,7 @@
 const net = require('net')
 const argv = require('minimist')(process.argv)
 const CabalIRC = require('.')
-
+const {join} = require('path')
 
 var usage = `Usage
   cabal-irc cabal://key
@@ -28,10 +28,10 @@ if (help) {
 
 
 // Load configuration from environment for docker-friendlyness
-if (!key)   key = process.env['CABAL_KEY'] || null
-if (!db)    db = process.env['CABAL_DB']
-if (!host)  host = process.env['CABAL_HOST'] || '127.0.0.1'
-if (!port)  port = process.env['CABAL_PORT'] || 6667
+if (!key)   key = process.env.CABAL_KEY || null
+if (!db)    db = process.env.CABAL_DB
+if (!host)  host = process.env.CABAL_HOST || '127.0.0.1'
+if (!port)  port = process.env.CABAL_PORT || 6667
 
 // Strip out URL-components from keystring if availble
 // TODO: Might be safer to use `new URL(key).getHost()`
@@ -40,9 +40,10 @@ if (key) key = key.replace(/^(cabal|cbl|dat):\/\//,'').replace(/\//g, '')
 // If we've been provided a key but not a storage,
 // then default storage to ~/.cabal/PUBKEY
 if (!db && key) {
+
   let homedir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
-  let rootdir = homedir + '/.cabal/archives/'
-  db = rootdir + key
+  let rootdir = process.env.CABAL_STORE || join(homedir, '/.cabal/archives/')
+  db = join(rootdir, key)
 }else if (!db && !key) {
   process.stderr.write(usage)
   process.exit(1)

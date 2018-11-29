@@ -2,6 +2,9 @@
   "name": "cabal-irc",
   "version": "1.0.0",
   "description": "Connect to Cabal using an IRC client.",
+  "bin": {
+    "cabal-irc": "cli.js"
+  },
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test $(npm bin)/tape test.js",

@@ -14,6 +14,26 @@ Usage
     --port    Port to listen for incoming IRC-connections.
     --help    Prints this message.
 
+**Using Docker**
+
+No prebuilt images are available yet, but you can easily build one yourself
+by cloning this repository and running command:
+
+    docker build -t cabal-irc .
+
+Then you can join the public cabal using command:
+
+    docker run --name cabal-irc \
+      -p 6667 \
+      -v ~/.cabal/archives:/data/ \
+      cabal-irc --key=cabal://0b2a6c1c58014fe0da6dff38df6282157c405bc0ed7b550cda5c8c43d8067047
+
+And finally connect to localhost:6667 with an irc-client, you're set!
+
+IRC-client tip:
+
+    /j #default
+    !recap
 
 # Implemented IRC-commads
 Current status
